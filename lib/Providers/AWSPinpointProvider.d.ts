@@ -1,4 +1,4 @@
-import { AnalyticsProvider, PromiseHandlers } from '../types';
+import { AnalyticsProvider } from '../types';
 export default class AWSPinpointProvider implements AnalyticsProvider {
     static category: string;
     static providerName: string;
@@ -10,7 +10,6 @@ export default class AWSPinpointProvider implements AnalyticsProvider {
     private _buffer;
     private _clientInfo;
     private _timer;
-    private _endpointGenerating;
     constructor(config?: any);
     private _setupTimer;
     /**
@@ -19,6 +18,7 @@ export default class AWSPinpointProvider implements AnalyticsProvider {
      * Put events into buffer
      */
     private _putToBuffer;
+    private _sendFromBuffer;
     /**
      * get the category of the plugin
      */
@@ -36,13 +36,26 @@ export default class AWSPinpointProvider implements AnalyticsProvider {
      * record an event
      * @param {Object} params - the params of an event
      */
-    record(params: any, handlers: PromiseHandlers): Promise<any>;
+    record(params: any): Promise<boolean>;
     private _generateSession;
     private _send;
     private _generateBatchItemContext;
     private _pinpointPutEvents;
-    private _retry;
-    private _record;
+    /**
+     * @private
+     * @param params
+     */
+    private _startSession;
+    /**
+     * @private
+     * @param params
+     */
+    private _stopSession;
+    /**
+     * @private
+     * @param params
+     */
+    private _recordCustomEvent;
     private _updateEndpoint;
     private _removeUnusedEndpoints;
     /**

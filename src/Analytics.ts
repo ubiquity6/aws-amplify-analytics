@@ -244,13 +244,13 @@ export default class AnalyticsClass {
 
         const provider = params.provider? params.provider: 'AWSPinpoint';
         
-        return new Promise((resolve, reject) => {
-            this._pluggables.forEach((pluggable) => {
-                if (pluggable.getProviderName() === provider) {
-                    pluggable.record(params, { resolve, reject });
-                }
-            });
+        this._pluggables.forEach((pluggable) => {
+            if (pluggable.getProviderName() === provider) {
+                pluggable.record(params);
+            }
         });
+
+        return Promise.resolve();
     }
 
     public autoTrack(trackerType, opts) {
